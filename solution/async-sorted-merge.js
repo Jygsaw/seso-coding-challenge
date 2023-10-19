@@ -1,6 +1,6 @@
 "use strict";
 
-const { dateCompare, reorderFirst } = require('../lib/log-source-utils');
+const { dateCompare, reorderLast } = require('../lib/log-source-utils');
 
 // Print all entries, across all of the *async* sources, in chronological order.
 
@@ -9,13 +9,13 @@ module.exports = (logSources, printer) => {
     logSources.sort(dateCompare);
 
     while (logSources.length) {
-      printer.print(logSources[0].last);
+      printer.print(logSources[logSources.length - 1].last);
 
-      if (logSources[0].drained) {
-        logSources.shift();
+      if (logSources[logSources.length - 1].drained) {
+        logSources.pop();
       } else {
-        await logSources[0].popAsync();
-        reorderFirst(logSources);
+        await logSources[logSources.length - 1].popAsync();
+        reorderLast(logSources);
       }
    }
 
