@@ -1,21 +1,21 @@
 "use strict";
 
-const { dateCompare, reorderLast } = require('../lib/log-source-utils');
+const { buildMinHeap, minHeapify, removeMinHeapNode } = require('../lib/log-source-utils');
 
 // Print all entries, across all of the *async* sources, in chronological order.
 
 module.exports = (logSources, printer) => {
   return new Promise(async (resolve, reject) => {
-    logSources.sort(dateCompare);
+    buildMinHeap(logSources);;
 
     while (logSources.length) {
-      printer.print(logSources[logSources.length - 1].last);
+      printer.print(logSources[0].last);
 
-      if (logSources[logSources.length - 1].drained) {
-        logSources.pop();
+      if (logSources[0].drained) {
+        removeMinHeapNode(logSources, 0);
       } else {
-        await logSources[logSources.length - 1].popAsync();
-        reorderLast(logSources);
+        await logSources[0].popAsync();
+        minHeapify(logSources, 0);
       }
    }
 

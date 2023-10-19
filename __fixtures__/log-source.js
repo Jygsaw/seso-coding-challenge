@@ -22,10 +22,31 @@ const logSourceD = {
     msg: 'logSourceD msg',
   },
 };
+const logSourceE = {
+  last: {
+    date: new Date(50),
+    msg: 'logSourceE msg',
+  },
+};
+const logSourceF = {
+  last: {
+    date: new Date(60),
+    msg: 'logSourceF msg',
+  },
+};
+const logSourceG = {
+  last: {
+    date: new Date(70),
+    msg: 'logSourceG msg',
+  },
+};
 
 module.exports = {
   logSourceA,
   logSourceB,
   logSourceC,
   logSourceD,
+  logSourceE,
+  logSourceF,
+  logSourceG,
 };
